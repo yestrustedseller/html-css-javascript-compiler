@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online HTML, CSS & JS Compiler</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/919/919827.png" type="image/png">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background-color: #1e1e1e;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+        nav {
+            background-color: #222;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .sections {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .sections label {
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        textarea {
+            width: 90%;
+            max-width: 600px;
+            height: 200px;
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background: #2d2d2d;
+            color: #fff;
+            resize: none;
+            font-family: monospace;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: 2px solid #444;
+            background: white;
+            margin-top: 20px;
+        }
+        #loadTime {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #ccc;
+        }
+        @media (max-width: 768px) {
+            textarea {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body onload="displayLoadTime()">
+    <nav>Online HTML, CSS & JS Compiler</nav>
+    <div class="container">
+        <h2>Code Your HTML, CSS & JS</h2>
+        <div id="loadTime">Page loaded in: <span id="time"></span> seconds</div>
+        <div class="sections">
+            <label for="html">HTML</label>
+            <textarea id="html" placeholder="Write HTML here..."><!DOCTYPE html>
+<html>
+<head>
+    <title>My Page</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+    </style>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+</body>
+</html></textarea>
+            <label for="css">CSS</label>
+            <textarea id="css" placeholder="Write CSS here...">body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}</textarea>
+            <label for="js">JavaScript</label>
+            <textarea id="js" placeholder="Write JavaScript here...">document.addEventListener("DOMContentLoaded", function() {
+    console.log("Hello, World!");
+});</textarea>
+        </div>
+        <button onclick="compileCode()">Run Code</button>
+        <iframe id="output"></iframe>
+    </div>
+    
+    <script>
+        function compileCode() {
+            const htmlCode = document.getElementById("html").value;
+            const cssCode = "<style>" + document.getElementById("css").value + "</style>";
+            const jsCode = document.getElementById("js").value;
+            
+            const output = document.getElementById("output").contentWindow.document;
+            output.open();
+            output.write(`<!DOCTYPE html><html><head>${cssCode}</head><body>${htmlCode}<script>${jsCode}<\/script></body></html>`);
+            output.close();
+        }
+
+        function displayLoadTime() {
+            const startTime = performance.now();
+            window.onload = function () {
+                const endTime = performance.now();
+                const loadTime = ((endTime - startTime) / 1000).toFixed(2);
+                document.getElementById("time").textContent = loadTime;
+            };
+        }
+    </script>
+</body>
+</html>
